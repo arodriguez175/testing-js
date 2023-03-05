@@ -20,11 +20,35 @@ describe("asynchronous code", () => {
     function fetchData() {
       throw "error";
     }
+
     expect.assertions(1);
+
     try {
       await fetchData();
     } catch (e) {
       expect(e).toMatch("error");
     }
+  });
+
+  // Combine async and await with .resolves or .rejects
+  test("the data is peanut butter", async () => {
+    expect.assertions(1);
+    await expect(fetchData()).resolves.toBe("peanut butter");
+  });
+
+  test("the fetch fails with an error", async () => {
+    function fetchData() {
+      return new Promise((resolve, reject) => {
+        reject("error");
+      });
+    }
+
+    expect.assertions(1);
+    await expect(fetchData()).rejects.toMatch("error");
+  });
+
+  test("the fetch fails with an error", () => {
+    expect.assertions(1);
+    return fetchData().catch((e) => expect(e).toMatch("error"));
   });
 });
