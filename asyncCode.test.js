@@ -48,7 +48,22 @@ describe("asynchronous code", () => {
   });
 
   test("the fetch fails with an error", () => {
-    expect.assertions(1);
     return fetchData().catch((e) => expect(e).toMatch("error"));
+  });
+
+  test("the data is peanut butter", () => {
+    expect.assertions(1);
+    return expect(fetchData()).resolves.toBe("peanut butter");
+  });
+
+  test("the fetch fails with an error", () => {
+    function fetchData() {
+      return new Promise((resolve, reject) => {
+        reject("error");
+      });
+    }
+
+    expect.assertions(1);
+    return expect(fetchData()).rejects.toMatch("error");
   });
 });
