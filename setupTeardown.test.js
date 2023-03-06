@@ -23,3 +23,51 @@ describe("setup and tear down", () => {
     expect(count).toBe(1);
   });
 });
+
+describe("city database", () => {
+  beforeEach(() => {
+    initializeCityDatabase();
+    // return initializeCityDatabase(); // return if this function returned a promise
+  });
+
+  test("city database has Vienna", () => {
+    expect(isCity("Vienna")).toBeTruthy();
+  });
+
+  test("city database has San Juan", () => {
+    expect(isCity("San Juan")).toBeTruthy();
+  });
+});
+
+describe("city database", () => {
+  beforeEach(() => {
+    return initializeCityDatabase(); // return if this function returns a promise
+  });
+
+  test("city database has Vienna", () => {
+    expect(isCity("Vienna")).toBeTruthy();
+  });
+
+  test("city database has San Juan", () => {
+    expect(isCity("San Juan")).toBeTruthy();
+  });
+});
+
+// One time setup using beforeAll and afterAll for asynchronous setup
+describe("one time setup", () => {
+  beforeAll(() => {
+    return initializeCityDatabase();
+  });
+
+  afterAll(() => {
+    return clearCityDatabase();
+  });
+
+  test("city database has Vienna", () => {
+    expect(isCity("Vienna")).toBeTruthy();
+  });
+
+  test("city database has San Juan", () => {
+    expect(isCity("San Juan")).toBeTruthy();
+  });
+});
